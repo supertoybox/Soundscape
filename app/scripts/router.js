@@ -3,6 +3,7 @@ define(['jquery', 'underscore', 'backbone', 'views/DrawView'], function ($, _, B
 
     var AppRouter = Backbone.Router.extend({
 		routes: {
+            "draw": "showDrawView",
 			"*actions" : "defaultRoute"
 		}    
     });
@@ -10,6 +11,10 @@ define(['jquery', 'underscore', 'backbone', 'views/DrawView'], function ($, _, B
     var initialize = function () {
         var appRouter = new AppRouter;
 
+        appRouter.on("route:showDrawView", function (){
+            var drawView = new DrawView();
+        });        
+        
         appRouter.on("route:defaultRoute", function (actions){
             var drawView = new DrawView();
         });
