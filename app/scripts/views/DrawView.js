@@ -1,39 +1,63 @@
-define(['jquery', 'underscore', 'backbone', 'paper'], function ($, _, Backbone, paper) {
+define(['jquery', 'underscore', 'backbone', 'paper', 'hammer'], function ($, _, Backbone, paper, hammer) {
 
+    var path;    
+    
     var DrawView = Backbone.View.extend({
         el: $('#ss-main'),
         
         initialize: function () {
-            _.bindAll(this, 'render');
+            _.bindAll(this, 'draw', 'render');
             
             paper.install(window);
             paper.setup('ss-canvas');
             
-            this.render();
+            this.draw();
         },        
         
-        render: function () {
-            var tool = new Tool();
-            var path;
+        draw: function (){
+            path = new Path();
+            path.strokeColor = 'black';
+            //path.add(event.point);
             
-            tool.onMouseDown = function (event) {
-                console.log(event);
-                path = new Path();
-                path.strokeColor = 'black';
-                path.add(event.point);
-            }
+            this.$el.hammer();                    
+        },
+        
+        render: function (pt) {
+            console.log(pt);
+            path.add(pt);
+
+//            var tool = new Tool();
             
-            tool.onMouseDrag = function (event) {
-                path.add(event.point);
-            }
+            
+//            tool.onMouseDown = function (event) {
+//                console.log(event);
+//                path = new Path();
+//                path.strokeColor = 'black';
+//                path.add(event.point);
+//            }
+            
+//            tool.onMouseDrag = function (event) {
+//                path.add(event.point);
+//            }
+            
+            
         },
         
         events: {
-            'click': 'mouseIsDown',
+            'touchstart': 'eventIsDown',
+            'drag': 'eventIsDrag'
         },
         
-        mouseIsDown: function (evt) {
-            console.log(evt);
+        eventIsDown: function (evt) {
+            this.draw();
+            evt.preventDefault();
+        },
+        
+        eventIsDrag: function (evt) {            
+            var point = new Point(evt.gesture.center.pageX, evt.gesture.center.pageY);
+            
+            this.render(point);
+            evt.preventDefault();
         }        
 
     });
