@@ -1,9 +1,9 @@
-define(['jquery', 'underscore', 'backbone', 'views/DrawView'], function ($, _, Backbone, DrawView) {
+define(['jquery', 'underscore', 'backbone', 'views/LineDrawView'], function ($, _, Backbone, LineDrawView) {
     'use strict';
 
     var AppRouter = Backbone.Router.extend({
 		routes: {
-            "draw": "showDrawView",
+            "draw": "showLineDrawView",
 			"*actions" : "defaultRoute"
 		}    
     });
@@ -11,12 +11,12 @@ define(['jquery', 'underscore', 'backbone', 'views/DrawView'], function ($, _, B
     var initialize = function () {
         var appRouter = new AppRouter;
 
-        appRouter.on("route:showDrawView", function (){
-            var drawView = new DrawView();
+        appRouter.on("route:showLineDrawView", function (){
+            var drawView = new LineDrawView();
         });        
         
         appRouter.on("route:defaultRoute", function (actions){
-            var drawView = new DrawView();
+            var drawView = new LineDrawView();
         });
         
         Backbone.history.start();        
