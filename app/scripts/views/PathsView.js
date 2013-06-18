@@ -1,6 +1,7 @@
 define(['jquery', 'underscore', 'backbone', 'paper', 'hammer', 'dat-gui'], function ($, _, Backbone, paper, hammer, GUI) {
 
-    var pathContainer;    
+    var pathContainer;
+    var copyContainer = [];
     var gui;
 
     
@@ -19,9 +20,9 @@ define(['jquery', 'underscore', 'backbone', 'paper', 'hammer', 'dat-gui'], funct
         render: function () {
             // Using dat.gui from Google Data Arts as GUI
             gui = new dat.GUI();
-            gui.add(this, 'generatePath');
-            gui.add(this, 'generateCircle');            
-            gui.add(this, 'generateTriangle');
+            gui.add(this, 'generatePath').name('Path').onChange(this.clearStage);
+            gui.add(this, 'generateCircle').name('Circle').onChange(this.clearStage);
+            gui.add(this, 'generateTriangle').name('Triangle').onChange(this.clearStage);
             
             this.$el.hammer();
         },
@@ -29,7 +30,7 @@ define(['jquery', 'underscore', 'backbone', 'paper', 'hammer', 'dat-gui'], funct
         events: {
 
         },
-
+        
         generatePath: function () {
             var path = new Path();
             path.strokeColor = 'black';
@@ -74,7 +75,7 @@ define(['jquery', 'underscore', 'backbone', 'paper', 'hammer', 'dat-gui'], funct
             var options = $.extend({}, defaults, options);
 
             // Create a copy of the path and move it 100pt to the right:
-            for (var i = 0; i < 10; i++) {
+            for (var i = 1; i < 11; i++) {
                 var copy = obj.clone();
                 copy.fullySelected = true;
                 copy.position.x += 100 * i;
@@ -84,11 +85,22 @@ define(['jquery', 'underscore', 'backbone', 'paper', 'hammer', 'dat-gui'], funct
                     copy.smooth();
                 }
                 
-            }        
+                copyContainer.push(copy);
+            }   
+            
+            paper.view.draw();
         },
         
         clearStage: function () {
-            pathContainer.remove();
+            if (pathContainer != undefined){
+                pathContainer.remove();
+                
+                _(copyContainer).each(function (copy) {
+                    copy.remove();
+                });
+                
+                copyContainer = [];
+            }
         }
 
     });
