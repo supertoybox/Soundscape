@@ -5,6 +5,7 @@ require.config({
         backbone: '../components/backbone/backbone',
         paper: '../components/paperjs/lib/paper',
         hammer: '../components/hammerjs/dist/jquery.hammer',
+        'dat-gui': 'vendor/dat.gui',
         bootstrap: 'vendor/bootstrap'
     },
     shim: {
@@ -31,11 +32,8 @@ require.config({
 
 require(['app', 'jquery', 'bootstrap'], function (App, $) {
     'use strict';
-    console.log(App);
-    console.log('Running jQuery %s', $().jquery);
     
     $(function (){
-        console.log('DOM Ready');
         App.initialize();
     });
 });
