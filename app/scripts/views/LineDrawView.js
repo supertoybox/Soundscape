@@ -23,7 +23,7 @@ define(['jquery', 'underscore', 'backbone', 'paper', 'hammer'], function ($, _, 
         },
         
         render: function (pt) {
-            path.add(pt);            
+            path.add(pt);
         },
         
         events: {
