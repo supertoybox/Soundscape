@@ -32,16 +32,16 @@ define(['jquery', 'underscore', 'backbone', 'paper', 'hammer', 'dat-gui'], funct
         },
         
         generatePath: function () {
-            var path = new Path();
-            path.strokeColor = 'black';
-            path.add(new Point(30, 75)); 
-            path.add(new Point(30, 25)); 
-            path.add(new Point(80, 25));
-            path.add(new Point(80, 75));
-            path.closed = true;
-        
-            // Select the path, so we can see its handles:
-            path.fullySelected = true;
+            var pathStyle = {
+                strokeColor: '#FF0000'  
+            };
+            
+            var path = new Path({
+                segments: [[30, 75], [30, 25], [80, 25], [80, 75]],
+                closed: true,
+                fullySelected: false,
+                style: pathStyle
+            });
             
             pathContainer = path;
             
