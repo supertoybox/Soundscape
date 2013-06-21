@@ -33,12 +33,10 @@ define(['jquery', 'underscore', 'backbone', 'paper', 'hammer'], function ($, _, 
                                     
                     var path = new Path.Circle({
                         center: new Point(x * gridSize, y * gridSize),
-                        radius: (gridSize / 2 / spacing)
+                        radius: (gridSize / 2 / spacing),
+                        fillColor: color
                     });
                     
-                    // Set the fill color of the path to the color
-                    // of the pixel:
-                    path.fillColor = color;
                 }
             }
             
@@ -54,7 +52,6 @@ define(['jquery', 'underscore', 'backbone', 'paper', 'hammer'], function ($, _, 
         onFrame: function () {
             for (var i = 0; i < project.activeLayer.children.length; i++) {
                 var item = project.activeLayer.children[i];
-                item.fillColor.hue += 1;
                 
 //                item.position.x += item.bounds.width / 5;
 //        
